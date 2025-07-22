@@ -1,4 +1,5 @@
-﻿using Serilog.Sinks.Grafana.Loki.Tests.TestHelpers;
+﻿using System.Net.Http;
+using Serilog.Sinks.Grafana.Loki.Tests.TestHelpers;
 using Shouldly;
 using Xunit;
 

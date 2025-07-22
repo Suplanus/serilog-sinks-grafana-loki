@@ -1,4 +1,5 @@
-﻿using Serilog.Sinks.Grafana.Loki.HttpClients;
+﻿using System.Net.Http;
+using Serilog.Sinks.Grafana.Loki.HttpClients;
 using Serilog.Sinks.Grafana.Loki.Utils;
 
 namespace Serilog.Sinks.Grafana.Loki.Tests.TestHelpers;
@@ -26,6 +27,7 @@ internal class TestLokiHttpClient : LokiHttpClient
         Content = await streamReader.ReadToEndAsync();
         RequestUri = requestUri;
 
-        return new HttpResponseMessage();
+        HttpResponseMessage response = await base.PostAsync(requestUri, contentStream);
+        return response;
     }
 }
