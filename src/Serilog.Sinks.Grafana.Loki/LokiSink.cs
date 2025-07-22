@@ -117,9 +117,12 @@ internal class LokiSink : ILogEventSink, IDisposable
                                 continue;
                             }
 
-                            response = await _httpClient
-                                .PostAsync(_requestUri, contentStream)
-                                .ConfigureAwait(false);
+                            var client = new HttpClient();
+                            using var streamReader = new StreamReader(contentStream, Encoding.UTF8WithoutBom);
+                            var content = await streamReader.ReadToEndAsync();
+                            response = await client.PostAsync(
+                                           _requestUri,
+                                           new StringContent(content, System.Text.Encoding.UTF8, "application/json"));
                         }
                     }
 
